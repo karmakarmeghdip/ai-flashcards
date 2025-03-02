@@ -3,13 +3,13 @@ import React, { useState } from 'react';
 import {
   Alert,
   KeyboardAvoidingView,
-  Platform
+  Platform,
+  useColorScheme
 } from 'react-native';
 import { Stack } from 'expo-router';
 import { router } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StatusBar } from 'expo-status-bar';
-// import { hc } from 'hono/client';
 const { hc } = require('hono/dist/client') as typeof import('hono/client');
 import type { App } from '@/server/api';
 import { Button, ButtonSpinner, ButtonText } from '@/components/ui/button';
@@ -23,6 +23,7 @@ console.log('client:', client);
 export default function HomeScreen() {
   const [content, setContent] = useState('');
   const [loading, setLoading] = useState(false);
+  const colorScheme = useColorScheme();
 
   const generateFlashcards = async () => {
     if (content.trim().length < 10) {
@@ -56,64 +57,65 @@ export default function HomeScreen() {
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      className="flex-1 bg-gray-50 dark:bg-gray-900"
+      className="flex-1 bg-ctp-base dark:bg-ctp-mantle"
       keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}
     >
       <Stack.Screen
         options={{
           title: 'Flashcard Generator',
           headerStyle: {
-            backgroundColor: '#3b82f6',
+            backgroundColor: colorScheme === 'dark' ? '#313244' : '#1e66f5', // ctp-blue variants
           },
-          headerTintColor: '#fff',
+          headerTintColor: colorScheme === 'dark' ? '#f5e0dc' : '#ffffff',
           headerTitleStyle: {
             fontWeight: 'bold',
           },
         }}
       />
-      <StatusBar style="light" />
+      <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
 
       <VStack space="md" className="p-6 pt-8">
-        <Text className="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-2">
+        <Text className="text-xl font-semibold text-ctp-text dark:text-ctp-rosewater mb-2">
           Enter your study content:
         </Text>
-        <Textarea className="mb-4 border-2 border-gray-200 dark:border-gray-700 rounded-xl">
+        <Textarea className="mb-4 border-2 border-ctp-surface1 dark:border-ctp-surface2 rounded-xl">
           <TextareaInput
             multiline
-            className="min-h-[200px] p-4 text-base text-gray-700 dark:text-gray-200"
+            className="min-h-[40vh] p-4 text-base text-ctp-text dark:text-ctp-text"
             placeholder="Paste your study material here..."
             value={content}
             onChangeText={setContent}
             textAlignVertical="top"
+            placeholderTextColor={colorScheme === 'dark' ? '#a6adc8' : '#9ca0b0'} // ctp-subtext0 variants
           />
         </Textarea>
 
         <Button
           onPress={generateFlashcards}
           className={`rounded-xl ${content.trim().length < 10
-            ? 'bg-gray-300 dark:bg-gray-700'
-            : 'bg-blue-600 dark:bg-blue-500'
+            ? 'bg-ctp-overlay0 dark:bg-ctp-overlay1'
+            : 'bg-ctp-surface0 dark:bg-ctp-surface1'
             }`}
           disabled={loading || content.trim().length < 10}
         >
           {loading ? (
-            <ButtonSpinner color="#fff" size="small" />
+            <ButtonSpinner color="#ffffff" size="small" />
           ) : (
-            <ButtonText className="font-bold text-white">Generate Flashcards</ButtonText>
+            <ButtonText className="font-bold text-ctp-text">Generate Flashcards</ButtonText>
           )}
         </Button>
 
         {loading && (
-          <Text className="text-center text-gray-600 dark:text-gray-300 italic mt-2">
+          <Text className="text-center text-ctp-subtext0 dark:text-ctp-subtext0 italic mt-2">
             Creating flashcards... This may take a moment.
           </Text>
         )}
 
         <Button
           onPress={() => router.push('/login')}
-          className="mt-4 bg-transparent border border-blue-500 rounded-xl hover:bg-blue-500"
+          className="mt-4 bg-transparent border border-ctp-blue dark:border-ctp-lavender rounded-xl hover:bg-ctp-blue/10 dark:hover:bg-ctp-lavender/10"
         >
-          <ButtonText className="text-blue-600 dark:text-blue-400 font-medium">
+          <ButtonText className="text-ctp-blue dark:text-ctp-lavender font-medium">
             Login
           </ButtonText>
         </Button>
