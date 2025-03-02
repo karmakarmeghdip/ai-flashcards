@@ -1,6 +1,8 @@
+import { Box } from "@/components/ui/box";
+import { Button, ButtonText } from "@/components/ui/button";
+import { Heading } from "@/components/ui/heading";
 import { authClient } from "@/lib/auth-client";
 import { useState } from "react";
-import { View, Text, Input, Button } from "tamagui";
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -16,32 +18,15 @@ export default function Login() {
       await new Promise((resolve) => setTimeout(resolve, 1000));
       throw new Error('Not implemented');
       // await authClient.signIn();
-    } catch (error: any) {
-      setError(error.message);
+    } catch (error) {
+      setError((error as Error).message);
     } finally {
       setLoading(false);
     }
   };
 
-  return (
-    <View>
-      <Text>Login</Text>
-      <Input
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-      />
-      <Input
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
-      {error ? <Text>{error}</Text> : null}
-      <Button
-        onPress={login}
-        disabled={loading}
-      >Login</Button>
-    </View>
-  );
+  return (<Box className="flex items-center justify-center h-full">
+    <Heading className="m-4">Login</Heading>
+    <Button><ButtonText>Google</ButtonText></Button>
+  </Box>);
 }
