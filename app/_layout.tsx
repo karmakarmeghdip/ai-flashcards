@@ -1,7 +1,7 @@
 import { Stack } from 'expo-router';
 import "@/global.css";
 import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
-import { useColorScheme } from 'react-native';
+import { useColorScheme, View } from 'react-native';
 
 export default function Layout() {
   const colorScheme = useColorScheme();
@@ -11,14 +11,15 @@ export default function Layout() {
       <Stack
         screenOptions={{
           headerStyle: {
-            backgroundColor: colorScheme === 'dark' ? '#8caaee' : '#1e66f5', // ctp-blue variants
+            backgroundColor: colorScheme === 'dark' ? '#313244' : '#1e66f5', // ctp-blue variants
           },
-          headerTintColor: '#ffffff',
+          headerTintColor: colorScheme === 'dark' ? '#f5e0dc' : '#ffffff',
           headerTitleStyle: {
             fontWeight: 'bold',
           },
         }}
       />
+
     </GluestackUIProvider>
   );
 }

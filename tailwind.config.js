@@ -196,6 +196,6 @@ module.exports = {
   },
   plugins: [gluestackPlugin, require("@catppuccin/tailwindcss")({
     prefix: 'ctp',
-    // defaultFlavour: 'mocha'
+    defaultFlavour: 'mocha'
   })],
 };

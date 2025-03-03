@@ -1,10 +1,10 @@
-// app/index.js - Home screen with text input and flashcard generation
 import React, { useState } from 'react';
 import {
   Alert,
   KeyboardAvoidingView,
   Platform,
-  useColorScheme
+  useColorScheme,
+  View
 } from 'react-native';
 import { Stack } from 'expo-router';
 import { router } from 'expo-router';
@@ -16,6 +16,7 @@ import { Button, ButtonSpinner, ButtonText } from '@/components/ui/button';
 import { Textarea, TextareaInput } from '@/components/ui/textarea';
 import { Text } from '@/components/ui/text';
 import { VStack } from '@/components/ui/vstack';
+import { } from '@catppuccin/tailwindcss';
 
 const client = hc<App>('http://localhost:3000');
 console.log('client:', client);
@@ -55,6 +56,7 @@ export default function HomeScreen() {
   };
 
   return (
+    // <View className='mocha'>
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       className="flex-1 bg-ctp-base dark:bg-ctp-mantle"
@@ -121,5 +123,6 @@ export default function HomeScreen() {
         </Button>
       </VStack>
     </KeyboardAvoidingView>
+    // </View>
   );
 }
